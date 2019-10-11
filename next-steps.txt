@@ -1,0 +1,6 @@
+Read commit message article, taking notes (40)
+Setup Mozilla / Google style linter (80)
+Write tests -> first commit (60)
+
+Set up issue tracker?
+Skillshare? (Free 2 months available)

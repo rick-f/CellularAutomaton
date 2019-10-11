@@ -1,0 +1,200 @@
+
+
+High level considerations on CGOL:
+
+    //don't need a controller. Maybe just have main method that requests
+    // and parses initial user input (program selection & starting pattern), runs the timer, & gens?
+	// //Allow drawing initial state by selecting cells / placing ant using mouse
+
+-----(IN JAVA)-----
+MODEL
+
+	abstract class CellularAutomaton { //design to allow Decoration (e.g. LANGSTON'S ANT with TRICOLOR HEXAGON cells with TWO ants)
+		Board board;
+	}
+
+    interface ViewBoard {
+        String getGameState();
+    }
+
+    interface Board extends ViewBoard {
+        String getName();
+        GameType getGameType();
+        PossibleCellColors getPossibleCellColors(); // or, List<CellColor>
+
+        //returns deep copy
+        List<List<Cell>> getCells();
+
+        void setGen(int gen);
+    }
+
+    abstract class AbstractBoard implements Board {
+        private String name;
+        private GameType gType;
+        private PossibleCellColors colors;
+		private final int edgeLength; //should this be final? (Builder customization)
+        private List<List<Cell>> cells;
+		
+		private enum PossibleCellColors { //how useful when there is potential for ant or turmite?
+			BW, RGB
+		}
+	
+		private enum CellShape {
+			SQUARE, HEXAGON
+		}
+    }
+
+    interface Cell<CellType> { 
+	//have T connected w/ # of possible states
+	//would it rly be reasonable to have ANY class used to represent possible states?
+	//
+        T getState();
+        void setState(T newState); //void nextState? not compatible with turmites
+     }
+	 
+	 class CellType<T> {
+	 
+		 CellType(int numStates, Color[] stateColors) {
+			this.numStates = numStates;
+			
+			this.stateColors = Color[numStates];
+			for (int i = 0; i++; i < numStates) {
+				this.stateColors[i] = stateColors[i];
+			}
+		}
+	 }
+	 
+	 class CellColor {
+		int r, g, b; // 0 -> 255
+	 }
+	 
+     //how to handle edges of board?
+        //sentinel values
+        //nulls
+
+    enum GameType {
+        CGOL, LANGSTONS_ANT
+	}
+	
+	interface NonLinearCA<T> {
+		Map<Integer, List<List<T>>> getPrevStates;
+		List<List<T>> getStateAt(int gen);
+		void setGen(int gen);
+	}
+
+    ----- CONWAY'S GAME OF LIFE -----
+
+    class ConwaysBoard  extends AbstractBoard {
+        name = "Conway's Game of Life" || "CGOL";
+        gType = CGOL
+        colors = TWO;
+    }
+
+    class ConwaysCell implements Cell<Boolean> {
+        private boolean on;
+		private final ConwaysCell[] neighbors = new ConwaysCell[8]; //assign on cell construction or board construction?
+		
+		public Boolean getState() {
+			return on;
+		}
+		
+		public void setState(boolean newState) {
+			on = newState;
+		}
+    }
+	
+	class OBConwaysCell extends ConwaysCell { //has to extend Conway's Cell ("is-a")...but doesn't need neighbors or state?		
+		public Boolean getState() {
+			return false;
+		}
+		
+		public void setState(boolean newState) {
+			throw new UnsupportedOperationException("Cannot set the state of an out-of-bounds cell.");
+		}
+	}
+	
+	----- Langston's Ant -----
+	
+	interface LangstonsOps {
+		Position2D.Double[] antLocations();
+	}
+	
+	class TwoStateLA extends LangstonsBoard {
+		ant = new TwoStateAnt();
+	}
+	
+	interface Insect {
+		void moveTo(LangstonsCell new);
+		int getOrientation();
+	}
+	
+	interface LangstonsCell extends Cell<T> {
+		boolean canMoveTo();
+		//void moveHere(Insect insect); //default behavior: OBLangstonsCells turn insect around
+	}
+	
+	class LangstonsCell implements Cell<?????> {
+		public boolean canMoveTo() {
+			return true;
+		}
+	
+		//public void moveHere(Insect insect) {
+		//	insect.setCell(this);
+		//}
+	}
+	
+	class OBLangstonsCell implements Cell<?????> { //has to extend Langston's Cell ("is-a")...but doesn't need neighbors or state?
+		public boolean canMoveTo() {
+			return false;
+		}
+	}
+	
+	class TwoStateAnt implements Insect {
+		private LangstonsCell standingOn;
+		private int orientation; //in degrees. 0 -> 360. increments should correspond to cell shape.
+		
+		public void moveTo(LangstonsCell new) {
+			if (new.canMoveTo()) {
+				standingOn = new;
+				standingOn.setState(!standingOn.getState);
+			} else {
+				//??????????????
+			}
+		}
+		
+		//OR Strategy Pattern: class AntRules (also w/ enum PossibleCellColors ?)
+	}
+	
+	//DRAWING
+		//if cells have hasInsect boolean 
+		//draw cells -> draw insects***
+	
+	//how to handle ant collisions?
+		//much easier if the ants exist independently from the cells
+		//both Ant class and hasInsect boolean?
+			
+			
+VIEW
+
+    interface View {
+        void display();
+    }
+
+    abstract class AbstractView {
+        ViewBoard board;
+        double gensPerSec;
+    }
+
+    class TextView {
+        @Override
+        public void display() {
+            //print grid of 1s and 0s, w/ labeled rows & columns
+        }
+    }
+
+    class CGOLPanel extends JPanel {
+        BoardType bType = TWO_STATE;
+    }
+
+
+
