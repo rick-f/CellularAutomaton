@@ -10,16 +10,16 @@ High level considerations on CGOL:
 MODEL
 
 	abstract class CellularAutomaton { //design to allow Decoration (e.g. LANGSTON'S ANT with TRICOLOR HEXAGON cells with TWO ants)
-		Board board;
+		Grid grid;
 	}
 
-    interface ViewBoard {
+    interface ViewGrid {
         String getGameState();
     }
 
-    interface Board extends ViewBoard {
+    interface Grid extends ViewGrid {
         String getName();
-        GameType getGameType();
+        GridType getGridType();
         PossibleCellColors getPossibleCellColors(); // or, List<CellColor>
 
         //returns deep copy
@@ -28,9 +28,9 @@ MODEL
         void setGen(int gen);
     }
 
-    abstract class AbstractBoard implements Board {
+    abstract class AbstractGrid implements Grid {
         private String name;
-        private GameType gType;
+        private GridType gType;
         private PossibleCellColors colors;
 		private final int edgeLength; //should this be final? (Builder customization)
         private List<List<Cell>> cells;
@@ -68,11 +68,11 @@ MODEL
 		int r, g, b; // 0 -> 255
 	 }
 	 
-     //how to handle edges of board?
+     //how to handle edges of grid?
         //sentinel values
         //nulls
 
-    enum GameType {
+    enum GridType {
         CGOL, LANGSTONS_ANT
 	}
 	
@@ -84,7 +84,7 @@ MODEL
 
     ----- CONWAY'S GAME OF LIFE -----
 
-    class ConwaysBoard  extends AbstractBoard {
+    class ConwaysGrid  extends AbstractGrid {
         name = "Conway's Game of Life" || "CGOL";
         gType = CGOL
         colors = TWO;
@@ -92,7 +92,7 @@ MODEL
 
     class ConwaysCell implements Cell<Boolean> {
         private boolean on;
-		private final ConwaysCell[] neighbors = new ConwaysCell[8]; //assign on cell construction or board construction?
+		private final ConwaysCell[] neighbors = new ConwaysCell[8]; //assign on cell construction or grid construction?
 		
 		public Boolean getState() {
 			return on;
@@ -119,7 +119,7 @@ MODEL
 		Position2D.Double[] antLocations();
 	}
 	
-	class TwoStateLA extends LangstonsBoard {
+	class TwoStateLA extends LangstonsGrid {
 		ant = new TwoStateAnt();
 	}
 	
@@ -181,7 +181,7 @@ VIEW
     }
 
     abstract class AbstractView {
-        ViewBoard board;
+        ViewGrid grid;
         double gensPerSec;
     }
 
@@ -193,7 +193,7 @@ VIEW
     }
 
     class CGOLPanel extends JPanel {
-        BoardType bType = TWO_STATE;
+        GridType gType = TWO_STATE;
     }
 
 

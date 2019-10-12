@@ -1,6 +1,12 @@
+***Whitespace between tasks = anticipating more urgent intermediate tasks***
+
+Complete foundational, simplified interfaces & classes, w/ robust documentation (90)
+Write elementary tests (60)
+
 Read commit message article, taking notes (40)
-Setup Mozilla / Google style linter (80)
-Write tests -> first commit (60)
+
+Set up Auto DevOps
+Set up build (Maven?)
 
 Set up issue tracker?
 Skillshare? (Free 2 months available)
