@@ -9,24 +9,10 @@ High level considerations on CGOL:
 -----(IN JAVA)-----
 MODEL
 
-	abstract class CellularAutomaton { //design to allow Decoration (e.g. LANGSTON'S ANT with TRICOLOR HEXAGON cells with TWO ants)
+	//design to allow Decoration (e.g. LANGSTON'S ANT with TRICOLOR HEXAGON cells with TWO ants)
+	abstract class CellularAutomaton { 
 		Grid grid;
 	}
-
-    interface ViewGrid {
-        String getGameState();
-    }
-
-    interface Grid extends ViewGrid {
-        String getName();
-        GridType getGridType();
-        PossibleCellColors getPossibleCellColors(); // or, List<CellColor>
-
-        //returns deep copy
-        List<List<Cell>> getCells();
-
-        void setGen(int gen);
-    }
 
     abstract class AbstractGrid implements Grid {
         private String name;
@@ -45,11 +31,9 @@ MODEL
     }
 
     interface Cell<CellType> { 
-	//have T connected w/ # of possible states
-	//would it rly be reasonable to have ANY class used to represent possible states?
 	//
-        T getState();
-        void setState(T newState); //void nextState? not compatible with turmites
+        int getState();
+        void setState(int newState); //void nextState? not compatible with turmites
      }
 	 
 	 class CellType<T> {
@@ -62,10 +46,6 @@ MODEL
 				this.stateColors[i] = stateColors[i];
 			}
 		}
-	 }
-	 
-	 class CellColor {
-		int r, g, b; // 0 -> 255
 	 }
 	 
      //how to handle edges of grid?

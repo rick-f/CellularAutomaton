@@ -1,8 +1,10 @@
 /**
- * Defines methods for an object representing a two-dimensional grid of {@link Cell}s. It is used to
- * create an alias of a {@link Grid} that cannot be mutated.
+ * An alias of a {@link Grid} that cannot be mutated.
  */
 public interface ViewGrid {
 
+  /**
+   * Returns a String representing the state of all {@link Cell}s in the aliased {@link Grid}.
+   */
   String getGameState();
 }
