@@ -1,7 +1,9 @@
 ***Whitespace between tasks = anticipating more urgent intermediate tasks***
 
-Complete foundational, simplified interfaces & classes, w/ robust documentation (90)
-Write elementary tests (60)
+Write tests for equals & hashcode for all classes (60)
+Write equals & hashcode implementations for all classes (40)
+Test existing methods for all classes (90)
+Write tests for next methods to implement
 
 Read commit message article, taking notes (40)
 

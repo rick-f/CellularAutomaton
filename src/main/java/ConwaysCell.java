@@ -1,12 +1,20 @@
+import java.awt.*;
+import java.util.ArrayList;
+
 /** Represents one cell in a {@link Grid} for an instance of Conway's Game of Life. */
-public final class ConwaysCell implements Cell<TwoColorCell> {
-  private boolean on;
+public final class ConwaysCell implements Cell<TwoColorCellType> {
+  private static Color offColor = Color.black;
+  private static Color onColor = Color.green;
+
+  private CellType cellType = new TwoColorCellType(new Color[]{offColor, onColor});
+  private boolean on = false;
   // TODO: assign neighbors on cell construction or grid construction?
   /**
    * The cells immediately adjacent to this cell, ordered clockwise: index 0 - North, index 1 -
    * Northeast, etc.
    */
-  private final ConwaysCell[] neighbors = new ConwaysCell[8];
+  private final ConwaysCell[] neighbors =
+          new ConwaysCell[]{null, null, null, null, null, null, null, null};
 
   @Override
   public int getState() {
@@ -19,7 +27,7 @@ public final class ConwaysCell implements Cell<TwoColorCell> {
 
   @Override
   public int getNumStates() {
-    return 2;
+    return this.cellType.getNumStates();
   }
 
   @Override

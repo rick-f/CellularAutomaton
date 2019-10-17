@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -25,12 +26,12 @@ public abstract class CellType {
    * @throws IllegalArgumentException if not all the values of cellColors are unique from one
    *     another; if numStates does not equal the number of values in cellColors
    */
-  public CellType(int numStates, Collection<Color> cellColors) {
-    if (cellColors.size() == numStates) {
+  public CellType(int numStates, Color[] cellColors) {
+    if (cellColors.length == numStates) {
       // each Color in cellColors is distinct from the others
-      if (cellColors.size() == cellColors.stream().distinct().toArray().length) {
+      if (cellColors.length == Arrays.stream(cellColors).distinct().toArray().length) {
         this.numStates = numStates;
-        this.cellColors = (Color[]) cellColors.toArray();
+        this.cellColors = cellColors;
       } else {
         throw new IllegalArgumentException(
                 "Each cell color for the new CellType must be distinct.");
@@ -39,5 +40,12 @@ public abstract class CellType {
       throw new IllegalArgumentException(
               "The number of states for the new CellType must equal the number of possible colors for the new CellType.");
     } // TODO: check that cellColors are human-distinguishable?
+  }
+
+  /**
+   * Returns the number of possible states in which any associated {@link Cell} can exist.
+   */
+  public int getNumStates() {
+    return numStates;
   }
 }
