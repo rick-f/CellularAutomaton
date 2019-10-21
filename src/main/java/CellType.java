@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * Defines the qualities of a {@link Cell}.
@@ -8,13 +7,14 @@ import java.util.Collection;
 public abstract class CellType {
 
   /**
-   * The number of possible states in which any associated {@link Cell} can exist
+   * The number of possible states in which any associated {@link Cell} can exist. Must always equal
+   * the number of entries in cellColors.
    */
   private int numStates;
   /**
    * The colors any associated {@link Cell} can present. Each color must be human-distinguishable,
-   * and the number of colors must equal numStates, such that each possible state corresponds to a
-   * human-distinguishable color
+   * and the number of entries must always equal numStates, such that each possible state
+   * corresponds to a human-distinguishable color
    */
   private Color[] cellColors;
 
@@ -47,5 +47,34 @@ public abstract class CellType {
    */
   public int getNumStates() {
     return numStates;
+  }
+
+  public Color[] getCellColors() {
+    return Arrays.copyOf(this.cellColors, this.numStates);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof CellType)) {
+      return false;
+    } else {
+      CellType that = (CellType) other;
+      return this.getNumStates() == that.getNumStates()
+              && Arrays.equals(this.getCellColors(), that.getCellColors());
+    }
+  }
+
+  // If CellTypeA's CellColors includes the same Colors as CellTypeB's CellColors, but they are
+  // ordered differently, then this method will return the same hashcode--but
+  // CellTypeA.equals(CellTypeB) == false
+  @Override
+  public int hashCode() {
+    return (this.getNumStates() * 1000)
+            // add the sum of the hashcodes of the colors in CellColors
+            + Arrays.stream(this.getCellColors())
+            .reduce(
+                    0,
+                    (sum, color) -> sum + color.hashCode(),
+                    Integer::sum);
   }
 }

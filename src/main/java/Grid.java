@@ -8,14 +8,6 @@ import java.util.List;
  */
 public interface Grid extends ViewGrid {
 
-  String getName();
-
-  GridType getType();
-
-  int getLength();
-
-  int getWidth();
-
   /**
    * Sets the automaton's generation.
    *
@@ -24,7 +16,7 @@ public interface Grid extends ViewGrid {
   void setGen(int gen);
 
   /**
-   * Returns a deep copy of the {@link Cell}s in this grid.
+   * Returns a deep copy of the {@link Cell}s in this grid, at the current generation.
    */
   List<List<Cell>> getCells();
 }

@@ -24,4 +24,10 @@ public interface Cell<CellType> {
      * @param newState the numerical representation for the Cell's new state
      */
     void setState(int newState);
+
+    @Override
+    boolean equals(Object other);
+
+    @Override
+    int hashCode();
 }

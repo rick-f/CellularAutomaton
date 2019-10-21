@@ -1,12 +1,13 @@
 import java.awt.*;
-import java.util.ArrayList;
 
 /** Represents one cell in a {@link Grid} for an instance of Conway's Game of Life. */
 public final class ConwaysCell implements Cell<TwoColorCellType> {
-  private static Color offColor = Color.black;
-  private static Color onColor = Color.green;
+    // The color of this ConwaysCell when it is off
+    private Color offColor = Color.black;
+    // The color of this ConwaysCell when it is on
+    private Color onColor = Color.green;
 
-  private CellType cellType = new TwoColorCellType(new Color[]{offColor, onColor});
+    private TwoColorCellType cellType = new TwoColorCellType(new Color[]{offColor, onColor});
   private boolean on = false;
   // TODO: assign neighbors on cell construction or grid construction?
   /**
@@ -15,6 +16,23 @@ public final class ConwaysCell implements Cell<TwoColorCellType> {
    */
   private final ConwaysCell[] neighbors =
           new ConwaysCell[]{null, null, null, null, null, null, null, null};
+
+    /**
+     * Constructs a ConwaysCell with the above specified offColor, onColor, and state (field "on").
+     */
+    public ConwaysCell() {
+    }
+
+    /**
+     * Constructs a ConwaysCell with the given offColor and onColor.
+     *
+     * @param customColors [0] = color to be displayed when this ConwaysCell is off; [1] = "..." on
+     */
+    public ConwaysCell(Color[] customColors) {
+        offColor = customColors[0];
+        onColor = customColors[1];
+        cellType = new TwoColorCellType(new Color[]{offColor, onColor});
+    }
 
   @Override
   public int getState() {
@@ -40,4 +58,14 @@ public final class ConwaysCell implements Cell<TwoColorCellType> {
       throw new IllegalArgumentException("Can only set a ConwaysCell to a state of 1 or 0.");
     }
   }
+
+    @Override
+    public boolean equals(Object other) {
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }
