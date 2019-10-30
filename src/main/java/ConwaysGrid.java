@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * Represents a two-dimensional grid of {@link ConwaysCell}s. A ConwaysGrid, when controlled by a
+ * Represents a two-dimensional grid of {@link ConwaysGrid}s. A ConwaysGrid, when controlled by a
  * set of rules, is the foundation of an instance of the cellular automaton Conway's Game of Life. A
  * ConwaysGrid can be visually represented to convey the contents of Conway's Game of Life at a
  * particular generation.
  */
-public class ConwaysGrid implements Grid {
+public final class ConwaysGrid implements Grid {
     // TODO: how to represent rules?
 
     private static final GridType GRID_TYPE = GridType.CGOL;
@@ -39,6 +40,17 @@ public class ConwaysGrid implements Grid {
         this.cells = getCellsForDimensions(this.length, this.width);
     }
 
+    /**
+     * Constructs a ConwaysGrid with the default gen and the given {@link Cell}s.
+     *
+     * @param cellsList the {@link Cell}s to comprise this ConwaysGrid.
+     */
+    ConwaysGrid(List<List<ConwaysCell>> cellsList) {
+        this.length = cellsList.size();
+        this.width = cellsList.get(0).size();
+        this.cells = cellsList;
+    }
+
     private static List<List<ConwaysCell>> getCellsForDimensions(int length, int width) {
         List<List<ConwaysCell>> cellsList = new ArrayList<>(length);
 
@@ -46,7 +58,9 @@ public class ConwaysGrid implements Grid {
             cellsColumn = new ArrayList<>(width);
 
             for (ConwaysCell cell : cellsColumn) {
-                cell = new ConwaysCell(); // TODO: initialize cell neighbors
+                //                cell = new ConwaysCell();
+                // TODO: initialize coords
+                // TODO: initialize cell neighbors
             }
         }
         return cellsList;
@@ -93,7 +107,15 @@ public class ConwaysGrid implements Grid {
 
     @Override
     public boolean equals(Object other) {
-        return false;
+        if (!(other instanceof ConwaysGrid)) {
+            return false;
+        } else {
+            ConwaysGrid that = (ConwaysGrid) other;
+            return this.getLength() == that.getLength()
+                    && this.getWidth() == that.getWidth()
+                    && this.getGen() == that.getGen()
+                    && Arrays.deepEquals(this.getCells().toArray(), that.getCells().toArray());
+        }
     }
 
     @Override

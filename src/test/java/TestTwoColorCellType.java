@@ -16,6 +16,7 @@ public class TestTwoColorCellType {
   private CellType equalsType1;
   private CellType type1Dif;
   private CellType type2;
+    private CellCoordinates notACellType = new CellCoordinates(0, 0);
 
   @BeforeEach
   void init() {
@@ -48,12 +49,11 @@ public class TestTwoColorCellType {
 
   @Test
   void getEquals_differentType_false() {
-    ConwaysCell notACellType = new ConwaysCell();
     assertNotEquals(type1, notACellType);
   }
 
   @Test
-  void getEquals_differentColors_false() {
+  void getEquals_equalExceptDifColors_false() {
     assertNotEquals(type1, type2);
   }
 
@@ -82,7 +82,6 @@ public class TestTwoColorCellType {
 
   @Test
   void hashCode_differentType_notEqual() {
-    ConwaysCell notACellType = new ConwaysCell();
     assertNotEquals(type1.hashCode(), notACellType.hashCode());
   }
 

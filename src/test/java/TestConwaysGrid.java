@@ -14,13 +14,16 @@ public class TestConwaysGrid {
     Grid grid1;
     Grid equalsGrid1;
     Grid grid2;
+    Grid grid3;
+    private CellCoordinates notAGrid = new CellCoordinates(0, 0);
 
     @BeforeEach
     void init() {
         try {
             grid1 = new ConwaysGrid();
             equalsGrid1 = new ConwaysGrid();
-            grid2 = new ConwaysGrid(10, 10);
+            grid2 = new ConwaysGrid(10, 20);
+            grid3 = new ConwaysGrid(20, 10);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -39,24 +42,37 @@ public class TestConwaysGrid {
 
     @Test
     void getEquals_differentType_false() {
-        ConwaysCell notAGrid = new ConwaysCell();
         assertNotEquals(grid1, notAGrid);
     }
 
     @Test
-    void getEquals_differentDimensions_false() {
+    void getEquals_equalExceptDifLength_false() {
         assertNotEquals(grid1, grid2);
     }
 
-//    @Test
-//    void getEquals_sameDimensionsDifferentCells_false() {
-//
-//    }
+    @Test
+    void getEquals_equalExceptDifWidth_false() {
+        assertNotEquals(grid1, grid3);
+    }
 
-//    @Test
-//    void getEquals_equalFieldsExceptGen_false() {
-//
-//    }
+    @Test
+    void getEquals_equalExceptGen_false() {
+        equalsGrid1.setGen(1);
+        assertNotEquals(grid1, equalsGrid1);
+    }
+
+    // Tests if a ConwaysGrid is equal to another with the same dimensions but with a Cell with a
+    // different state than its matching cell in the other ConwaysGrid
+    //    @Test
+    //    void getEquals_equalExceptCellStates_false() {
+    //
+    //    }
+
+    // Necessary?
+    //    @Test
+    //    void getEquals_equalExceptCellNeighbors_false() {
+    //
+    //    }
 
     @Test
     void hashCode_sameObject_equal() {
@@ -69,23 +85,16 @@ public class TestConwaysGrid {
     }
 
     @Test
-    void hashCode_differentDimensions_notEqual() {
+    void hashCode_differentLength_notEqual() {
         assertNotEquals(grid1.hashCode(), grid2.hashCode());
     }
 
-//    @Test
-//    void hashCode_sameDimensionsDifferentCells_notEqual() {
-//
-//    }
-
     @Test
     void hashCode_differentType_notEqual() {
-        ConwaysCell notACellgrid = new ConwaysCell();
-        assertNotEquals(grid1.hashCode(), notACellgrid.hashCode());
+        assertNotEquals(grid1.hashCode(), notAGrid.hashCode());
     }
 
-////    @Test
-////    void getCells_possiblyAliasedArray_notEquals() {
-////    }
-
+    ////    @Test
+    ////    void getCells_possiblyAliasedArray_notEquals() {
+    ////    }
 }

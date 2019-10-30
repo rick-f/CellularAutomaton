@@ -20,15 +20,16 @@ public class TestConwaysCell {
     private Color[] blackAndGreen = new Color[]{Color.black, Color.green};
     private Color[] greenAndBlack = new Color[]{Color.green, Color.black};
     private Color[] whiteAndYellow = new Color[]{Color.white, Color.yellow};
+    private CellCoordinates notAConwaysCell = new CellCoordinates(0, 0);
 
     @BeforeEach
     void init() {
         try {
-            defaultCell = new ConwaysCell();
-            defaultCell2 = new ConwaysCell();
-            equalsDefaultCell = new ConwaysCell(blackAndGreen);
-            difCell1 = new ConwaysCell(greenAndBlack);
-            difCell2 = new ConwaysCell(whiteAndYellow);
+            defaultCell = new ConwaysCell(0, 0);
+            defaultCell2 = new ConwaysCell(0, 0);
+            equalsDefaultCell = new ConwaysCell(blackAndGreen, 0, 0);
+            difCell1 = new ConwaysCell(greenAndBlack, 0, 0);
+            difCell2 = new ConwaysCell(whiteAndYellow, 0, 0);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -53,7 +54,6 @@ public class TestConwaysCell {
         assertEquals(defaultCell, defaultCell2);
     }
 
-
     @Test
     void getEquals_equalFieldsDifConstructor_true() {
         assertNotSame(defaultCell, equalsDefaultCell);
@@ -62,28 +62,32 @@ public class TestConwaysCell {
 
     @Test
     void getEquals_differentType_false() {
-        CellType notAConwaysCell = new TwoColorCellType(blackAndGreen);
         assertNotEquals(defaultCell, notAConwaysCell);
     }
 
     @Test
-    void getEquals_difColors_false() {
+    void getEquals_equalExceptDifColors_false() {
         assertNotEquals(defaultCell, difCell2);
     }
 
     @Test
-    void getEquals_equalColorsDifOrder_false() {
+    void getEquals_equalExceptColorsDifOrder_false() {
         assertNotEquals(defaultCell, difCell1);
     }
 
     @Test
-    void getEquals_sameFieldsExceptOn_false() {
+    void getEquals_equalExceptOn_false() {
         defaultCell2.setState(1);
         assertNotEquals(defaultCell, defaultCell2);
     }
 
 //    @Test
-//    void getEquals_sameFieldsExceptNeighbors_false() {
+//    void getEquals_equalExceptDifCoords_true() {
+//
+//    }
+
+//    @Test
+//    void getEquals_equalExceptDifNeighbors_true() {
 //
 //    }
 
@@ -94,7 +98,6 @@ public class TestConwaysCell {
 
     @Test
     void hashCode_differentType_notEqual() {
-        CellType notAConwaysCell = new TwoColorCellType(blackAndGreen);
         assertNotEquals(defaultCell.hashCode(), notAConwaysCell.hashCode());
     }
 
@@ -108,8 +111,9 @@ public class TestConwaysCell {
         assertEquals(defaultCell.hashCode(), equalsDefaultCell.hashCode());
     }
 
-    @Test
-    void hashCode_differentFields_notEqual() {
-        assertNotEquals(defaultCell.hashCode(), difCell1.hashCode());
-    }
+    //this test need not pass for the implementations of hashCode and equals to be valid
+//    @Test
+//    void hashCode_differentFields_notEqual() {
+//        assertNotEquals(defaultCell.hashCode(), difCell1.hashCode());
+//    }
 }

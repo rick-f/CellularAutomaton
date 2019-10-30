@@ -1,14 +1,16 @@
 ***Whitespace between tasks = anticipating more urgent intermediate tasks***
 
-Write equals & hashcode implementations for all classes (40)
-Test existing methods for all classes (90)
-Write tests for next methods to implement
+Write equals & hashcode implementations for all classes (20)
+	Remaining: ConwaysGrid
+Overload Git remote (origin) to push to GitHub *and* GitLab (10)	
+Write tests for all methods in all interfaces (90)
+Implement methods for all classes (120)
 
 Read commit message article, taking notes (40)
 Read unit testing article "Arrange-Act-Assert", taking notes (40)
 
+Write tests for next methods to implement
 Set up Auto DevOps
 Set up build (Maven?)
 
 Set up issue tracker?
-Skillshare? (Free 2 months available)
