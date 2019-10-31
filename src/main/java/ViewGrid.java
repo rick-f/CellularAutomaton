@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * An alias of a {@link Grid} that cannot be mutated.
  */
@@ -26,10 +28,15 @@ public interface ViewGrid {
      */
     int getGen();
 
-  /**
-   * Returns a String representing the state of all {@link Cell}s in the aliased {@link Grid}.
-   */
-  String getGameState();
+    /**
+     * Returns a deep copy of the {@link Cell}s in this grid, at the current generation.
+     */
+    List<? extends List<? extends Cell>> getCells();
+
+    /**
+     * Returns a String representing the state of all {@link Cell}s in the aliased {@link Grid}.
+     */
+    String getGameState();
 
     @Override
     boolean equals(Object other);

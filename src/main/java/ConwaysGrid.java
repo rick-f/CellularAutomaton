@@ -52,16 +52,19 @@ public final class ConwaysGrid implements Grid {
     }
 
     private static List<List<ConwaysCell>> getCellsForDimensions(int length, int width) {
-        List<List<ConwaysCell>> cellsList = new ArrayList<>(length);
+        List<List<ConwaysCell>> cellsList = new ArrayList<>();
 
-        for (List<ConwaysCell> cellsColumn : cellsList) { // TODO: make sure this works at all
-            cellsColumn = new ArrayList<>(width);
+        for (int x = 0; x < length; x++) {
+//      cellsList.add(new ArrayList<>(width));
+//      List<ConwaysCell> cellsColumn = cellsList.get(x);
+            List<ConwaysCell> cellsColumn = new ArrayList<>(width);
 
-            for (ConwaysCell cell : cellsColumn) {
-                //                cell = new ConwaysCell();
+            for (int y = 0; y < width; y++) {
+                cellsColumn.add(new ConwaysCell(x, y));
                 // TODO: initialize coords
                 // TODO: initialize cell neighbors
             }
+            cellsList.add(cellsColumn);
         }
         return cellsList;
     }
@@ -72,32 +75,33 @@ public final class ConwaysGrid implements Grid {
 
     @Override
     public void setGen(int gen) {
-        // do nothing
+        this.gen = gen;
     }
 
+    //TODO: make a deep copy
     @Override
-    public List<List<Cell>> getCells() {
-        return null;
+    public List<? extends List<? extends Cell>> getCells() {
+        return this.cells;
     }
 
     @Override
     public GridType getType() {
-        return null;
+        return GRID_TYPE;
     }
 
     @Override
     public int getLength() {
-        return 0;
+        return this.length;
     }
 
     @Override
     public int getWidth() {
-        return 0;
+        return this.width;
     }
 
     @Override
     public int getGen() {
-        return 0;
+        return this.gen;
     }
 
     @Override
@@ -120,6 +124,9 @@ public final class ConwaysGrid implements Grid {
 
     @Override
     public int hashCode() {
-        return 0;
+        return (this.gen * 1000000000)
+                + (this.length * 10000)
+                + this.width
+                + this.cells.stream().reduce(0, (sum, cell) -> sum + cell.hashCode(), Integer::sum);
     }
 }

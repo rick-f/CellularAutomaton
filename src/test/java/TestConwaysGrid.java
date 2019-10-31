@@ -1,9 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -45,6 +42,11 @@ public class TestConwaysGrid {
         assertNotEquals(grid1, notAGrid);
     }
 
+//    @Test
+//    void getEquals_differentTypeOfGrid_false() {
+//
+//    }
+
     @Test
     void getEquals_equalExceptDifLength_false() {
         assertNotEquals(grid1, grid2);
@@ -65,12 +67,6 @@ public class TestConwaysGrid {
     // different state than its matching cell in the other ConwaysGrid
     //    @Test
     //    void getEquals_equalExceptCellStates_false() {
-    //
-    //    }
-
-    // Necessary?
-    //    @Test
-    //    void getEquals_equalExceptCellNeighbors_false() {
     //
     //    }
 

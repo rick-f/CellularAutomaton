@@ -6,9 +6,8 @@ import java.awt.*;
  * OFF, 1 == ON). A Cell's number of possible states, as well as the {@link java.awt.Color} which is
  * associated with each state, is defined by the Cell's {@link CellType}.
  *
- * @param <CellType> the type of cell
  */
-public interface Cell<CellType> {
+public interface Cell {
 
     /**
      * Returns a numerical representation of the Cell's current state.

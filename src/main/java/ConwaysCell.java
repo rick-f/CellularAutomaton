@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /** Represents one cell in a {@link Grid} for an instance of Conway's Game of Life. */
-public final class ConwaysCell implements Cell<TwoColorCellType> {
+public final class ConwaysCell implements Cell {
     //  // The color of this ConwaysCell when it is off
     //  private Color offColor = Color.black;
     //  // The color of this ConwaysCell when it is on
