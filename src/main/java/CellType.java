@@ -27,8 +27,9 @@ public abstract class CellType {
    *     another; if numStates does not equal the number of values in cellColors
    */
   public CellType(int numStates, Color[] cellColors) {
-    if (cellColors.length == numStates) {
-      // each Color in cellColors is distinct from the others
+      if (0 < numStates && numStates <= 256 && numStates == cellColors.length) {
+          // no duplicate Colors
+          // TODO: check that cellColors are human-distinguishable
       if (cellColors.length == Arrays.stream(cellColors).distinct().toArray().length) {
         this.numStates = numStates;
         this.cellColors = cellColors;
@@ -39,7 +40,7 @@ public abstract class CellType {
     } else {
       throw new IllegalArgumentException(
               "The number of states for the new CellType must equal the number of possible colors for the new CellType.");
-    } // TODO: check that cellColors are human-distinguishable?
+      }
   }
 
   /**

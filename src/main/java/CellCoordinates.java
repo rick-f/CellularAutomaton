@@ -2,8 +2,8 @@
  * Represents the coordinates of a {@link Cell} within its {@link Grid}. Immutable.
  */
 public final class CellCoordinates {
-    private final int x;
-    private final int y;
+    public final int x;
+    public final int y;
 
     /**
      * Constructs a CellCoordinates with the given coordinates.
@@ -14,6 +14,10 @@ public final class CellCoordinates {
      *          {@link * Grid} Grid}
      */
     CellCoordinates(int x, int y) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("Cell coordinates cannot be negative.");
+        }
+
         this.x = x;
         this.y = y;
     }
@@ -30,6 +34,6 @@ public final class CellCoordinates {
 
     @Override
     public int hashCode() {
-        return this.x * 100000 + this.y;
+        return this.x * -1000000 + this.y;
     }
 }

@@ -41,8 +41,8 @@ public final class ConwaysCell implements Cell {
   @Override
   public int getState() {
     if (on) {
-      return 1;
-    } else {
+        return 1;
+    } else { //off
       return 0;
     }
   }
@@ -60,7 +60,7 @@ public final class ConwaysCell implements Cell {
     @Override
     public CellCoordinates getCoords() {
         return this.coords;
-    }
+  }
 
   @Override
   public void setState(int newState) {
@@ -69,12 +69,12 @@ public final class ConwaysCell implements Cell {
     } else if (newState == 1) {
       on = true;
     } else {
-      throw new IllegalArgumentException("Can only set a ConwaysCell to a state of 1 or 0.");
+        throw new IllegalArgumentException("Can only set a ConwaysCell to a state of 1 (on) or 0 (off).");
     }
   }
 
     // Two ConwaysCells with different coords and neighbors are equal nonetheless.
-    //TODO: is this a reasonable way to define equality?
+    // TODO: is this a reasonable way to define equality?
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof ConwaysCell)) {

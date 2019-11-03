@@ -1,7 +1,8 @@
 ***Whitespace between tasks = anticipating more urgent intermediate tasks***
 
-Overload Git remote (origin) to push to GitHub *and* GitLab (10)	
-Write tests for all methods in all interfaces (90)
+Ensure next commit goes both to GitHub & GitLab
+	- IntelliJ showing remote with 1 repo instead of 2
+
 Implement methods for all classes (120)
 
 Read commit message article, taking notes (40)

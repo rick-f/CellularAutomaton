@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -13,6 +16,8 @@ public class TestConwaysGrid {
     Grid grid2;
     Grid grid3;
     private CellCoordinates notAGrid = new CellCoordinates(0, 0);
+    List<ConwaysCell> validCellsColumn;
+    List<ConwaysCell> getValidCellsColumn2;
 
     @BeforeEach
     void init() {
@@ -21,9 +26,75 @@ public class TestConwaysGrid {
             equalsGrid1 = new ConwaysGrid();
             grid2 = new ConwaysGrid(10, 20);
             grid3 = new ConwaysGrid(20, 10);
+            List<ConwaysCell> validCellsColumn =
+                    Arrays.asList(new ConwaysCell(0, 0), new ConwaysCell(0, 1), new ConwaysCell(0, 2));
+            List<ConwaysCell> validCellsColumn2 =
+                    Arrays.asList(new ConwaysCell(1, 0), new ConwaysCell(1, 1), new ConwaysCell(1, 2));
         } catch (Exception e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    void constructor_zeroXDimension_exception() {
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new ConwaysGrid(0, 10));
+        assertEquals("The grid's length and width must each be greater than 0.", e.getMessage());
+    }
+
+    @Test
+    void constructor_zeroYDimension_exception() {
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new ConwaysGrid(10, 0));
+        assertEquals("The grid's length and width must each be greater than 0.", e.getMessage());
+    }
+
+    @Test
+    void constructor_negativeXDimension_exception() {
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new ConwaysGrid(-8, 10));
+        assertEquals("The grid's length and width must each be greater than 0.", e.getMessage());
+    }
+
+    @Test
+    void constructor_negativeYDimension_exception() {
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new ConwaysGrid(10, -8));
+        assertEquals("The grid's length and width must each be greater than 0.", e.getMessage());
+    }
+
+    @Test
+    void constructor_givenCellsListIsNull_exception() {
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new ConwaysGrid(null));
+        assertEquals("The cells list for this grid cannot be null.", e.getMessage());
+    }
+
+    @Test
+    void constructor_nullColumnInGivenCellsList_exception() {
+        List<List<ConwaysCell>> listWithNullColumn = Arrays.asList(validCellsColumn, null);
+
+        Exception e =
+                assertThrows(IllegalArgumentException.class, () -> new ConwaysGrid(listWithNullColumn));
+        assertEquals("No columns in the cells list for this grid can be null.", e.getMessage());
+    }
+
+    @Test
+    void constructor_nullCellInGivenCellsList_exception() {
+        validCellsColumn.add(null);
+        List<ConwaysCell> columnWithOneNullCell = validCellsColumn;
+        List<List<ConwaysCell>> listWithOneNullCell = Arrays.asList(getValidCellsColumn2, columnWithOneNullCell);
+        Exception e =
+                assertThrows(IllegalArgumentException.class, () -> new ConwaysGrid(listWithOneNullCell));
+        assertEquals("No cells in this grid's list of cells can be null.", e.getMessage());
+    }
+
+    @Test
+    void setGen_validNumber_setsGenToGivenNumber() {
+        assertEquals(0, grid1.getGen());
+        grid1.setGen(8);
+        assertEquals(8, grid1.getGen());
+    }
+
+    @Test
+    void setGen_negativeNumber_exception() {
+        Exception e = assertThrows(IllegalArgumentException.class, () -> grid1.setGen(-8));
+        assertEquals("The generation of this grid cannot be negative.", e.getMessage());
     }
 
     @Test
@@ -42,10 +113,10 @@ public class TestConwaysGrid {
         assertNotEquals(grid1, notAGrid);
     }
 
-//    @Test
-//    void getEquals_differentTypeOfGrid_false() {
-//
-//    }
+    //    @Test
+    //    void getEquals_differentTypeOfGrid_false() {
+    //
+    //    }
 
     @Test
     void getEquals_equalExceptDifLength_false() {
